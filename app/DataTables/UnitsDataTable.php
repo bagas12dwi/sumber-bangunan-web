@@ -23,6 +23,7 @@ class UnitsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'units.action')
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -43,17 +44,8 @@ class UnitsDataTable extends DataTable
             ->setTableId('units-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            ]);
+            ->selectStyleSingle();
     }
 
     /**
@@ -62,8 +54,8 @@ class UnitsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('No. '),
-            Column::make('nama_satuan'),
+            Column::make('DT_RowIndex')->title('No. ')->orderable(false)->searchable(false)->width(10),
+            Column::make('unit_name')->title('Nama Satuan'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

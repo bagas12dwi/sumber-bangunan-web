@@ -23,6 +23,7 @@ class CategoriesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'categories.action')
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -43,17 +44,8 @@ class CategoriesDataTable extends DataTable
             ->setTableId('categories-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            ]);
+            ->selectStyleSingle();
     }
 
     /**
@@ -62,11 +54,11 @@ class CategoriesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('no. '),
-            Column::make('nama'),
+            Column::make('DT_RowIndex')->title('No. ')->searchable(false)->orderable(false)->width(10),
+            Column::make('category_name')->title('Nama Kategori'),
             Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
+                ->exportable(true)
+                ->printable(true)
                 ->width(60)
                 ->addClass('text-center'),
         ];

@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\ProductsDataTable;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
-use App\Models\Product;
+use App\Http\Requests\StoreMultiPriceRequest;
+use App\Http\Requests\UpdateMultiPriceRequest;
+use App\Models\MultiPrice;
 
-class ProductController extends Controller
+class MultiPriceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(ProductsDataTable $productsDataTable)
+    public function index()
     {
-        return $productsDataTable->render('products.index', [
-            'title' => 'Produk'
-        ]);
+        //
     }
 
     /**
@@ -30,7 +27,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreMultiPriceRequest $request)
     {
         //
     }
@@ -38,7 +35,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(MultiPrice $multiPrice)
     {
         //
     }
@@ -46,7 +43,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(MultiPrice $multiPrice)
     {
         //
     }
@@ -54,7 +51,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateMultiPriceRequest $request, MultiPrice $multiPrice)
     {
         //
     }
@@ -62,7 +59,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(MultiPrice $multiPrice)
     {
         //
     }

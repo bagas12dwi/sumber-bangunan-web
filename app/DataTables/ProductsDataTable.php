@@ -23,6 +23,7 @@ class ProductsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'products.action')
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -31,7 +32,7 @@ class ProductsDataTable extends DataTable
      */
     public function query(Product $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with(['category']);
     }
 
     /**
@@ -45,15 +46,7 @@ class ProductsDataTable extends DataTable
             ->minifiedAjax()
             //->dom('Bfrtip')
             ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            ]);
+            ->selectStyleSingle();
     }
 
     /**
@@ -62,10 +55,14 @@ class ProductsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('gambar_produk'),
-            Column::make('nama_produk'),
-            Column::make('kategori'),
+            Column::make('DT_RowIndex')->searchable(false)->orderable(false)->title('No. '),
+            Column::make('img_path')->title('Gambar'),
+            Column::make('product_name')->title('Nama Produk'),
+            'category_id' => new Column([
+                'title' => 'Nama Kategori',
+                'data' => 'category.category_name',
+                'name' => 'category.category_name'
+            ]),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -6,6 +6,7 @@ use App\DataTables\CategoriesDataTable;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index(CategoriesDataTable $dataTable)
     {
-        return $dataTable->render('category', [
+        return $dataTable->render('categories.index', [
             'title' => 'Kategori'
         ]);
     }
@@ -24,15 +25,22 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.add', [
+            'title' => 'Tambah Kategori'
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validateddata = $request->validate([
+            'category_name' => 'required'
+        ]);
+
+        Category::create($validateddata);
+        return redirect()->intended('/manage-kategori')->with('success', 'Data Berhasil Ditambahkan ! ');
     }
 
     /**

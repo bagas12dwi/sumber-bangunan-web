@@ -6,6 +6,7 @@ use App\DataTables\UnitsDataTable;
 use App\Http\Requests\StoreUnitRequest;
 use App\Http\Requests\UpdateUnitRequest;
 use App\Models\Unit;
+use Illuminate\Http\Request;
 
 class UnitController extends Controller
 {
@@ -14,7 +15,7 @@ class UnitController extends Controller
      */
     public function index(UnitsDataTable $unitsDataTable)
     {
-        return $unitsDataTable->render('unit', [
+        return $unitsDataTable->render('units.index', [
             'title' => 'Satuan'
         ]);
     }
@@ -24,15 +25,22 @@ class UnitController extends Controller
      */
     public function create()
     {
-        //
+        return view('units.add', [
+            'title' => 'Tambahkan Satuan'
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUnitRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'unit_name' => 'required'
+        ]);
+
+        Unit::create($validatedData);
+        return redirect()->intended('/manage-satuan')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**

@@ -10,12 +10,14 @@
         Sumber Bangunan
     </title>
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+
     <!-- Nucleo Icons -->
     <link href="{{ URL::asset('/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ URL::asset('/css/style.css') }}" rel="stylesheet" />
@@ -34,6 +36,8 @@
         }
     </style>
 
+    @stack('css')
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -51,7 +55,9 @@
     <!--   Core JS Files   -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- DataTables -->
-    <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+    <script src="{{ URL::asset('/vendor/datatables/buttons.server-side.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="{{ URL::asset('/js/core/popper.min.js') }}"></script>
     <script src="{{ URL::asset('/js/core/bootstrap.min.js') }}"></script>
@@ -81,6 +87,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ URL::asset('/js/soft-ui-dashboard.min.js') }}"></script>
+
     @stack('script')
 </body>
 
