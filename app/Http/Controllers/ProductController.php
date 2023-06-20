@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\DataTables\ProductsDataTable;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -24,15 +27,27 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('products.add', [
+            'title' => 'Tambah Produk',
+            'categories' => $categories
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'img_path' => 'required | image',
+            'product_name' => 'required',
+            'category_id' => 'required'
+        ]);
+
+        $validatedData['img_path'] = $request->file('img_path')->store('produk');
+        Product::create($validatedData);
+        return redirect()->intended('manage-produk')->with('success', 'Data Berhasil Ditambahkan !');
     }
 
     /**
