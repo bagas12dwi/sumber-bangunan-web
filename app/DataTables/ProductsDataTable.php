@@ -55,7 +55,7 @@ class ProductsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex')->searchable(false)->orderable(false)->title('No. '),
+            Column::make('DT_RowIndex')->searchable(false)->orderable(false)->title('No. ')->width(10),
             Column::make('img_path')->title('Gambar'),
             Column::make('product_name')->title('Nama Produk'),
             'category_id' => new Column([

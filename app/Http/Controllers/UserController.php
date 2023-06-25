@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function index(UsersDataTable $dataTable)
     {
-        return $dataTable->render('user', ['title' => 'User']);
+        return $dataTable->render('users.index', ['title' => 'User']);
     }
 
     /**
@@ -21,7 +21,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.add', [
+            'title' => 'Tambahkan User'
+        ]);
     }
 
     /**
@@ -29,7 +31,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        User::create($validatedData);
+        return redirect()->intended('/manage-user')->with('success', 'Data Berhasil Ditambahkan!');
     }
 
     /**

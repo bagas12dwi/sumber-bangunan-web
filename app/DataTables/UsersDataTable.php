@@ -23,6 +23,7 @@ class UsersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'users.action')
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -62,15 +63,14 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('DT_RowIndex')->searchable(false)->orderable(false)->title('No. ')->width(10),
+            Column::make('name')->title('Nama Lengkap'),
+            Column::make('username')->title('Username'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
