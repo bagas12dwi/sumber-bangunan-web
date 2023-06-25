@@ -7,8 +7,8 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="fa fa-user" style="color: #ffffff"></i>
-                        <span class="d-sm-inline d-none text-light fw-bold ms-2">Hi, Admin</span>
-                        {{-- <span class="d-sm-inline d-none">{{ 'auth()->user()->name' }}</span> --}}
+                        {{-- <span class="d-sm-inline d-none text-light fw-bold ms-2">Hi, Admin</span> --}}
+                        <span class="d-sm-inline d-none text-light fw-bold ms-2">Hi, {{ auth()->user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>

@@ -39,7 +39,9 @@ class UnitController extends Controller
             'unit_name' => 'required'
         ]);
 
+        $validateddata['user_id'] = auth()->user()->id;
         Unit::create($validatedData);
+
         return redirect()->intended('/manage-satuan')->with('success', 'Data Berhasil Ditambahkan');
     }
 

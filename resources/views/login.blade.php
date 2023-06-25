@@ -29,22 +29,24 @@
                                         <h4 class="mt-1 mb-5 pb-1 text-uppercase fw-bold">Masuk</h4>
                                     </div>
 
-                                    <form>
+                                    <form action="{{ url('/login') }}" method="POST">
+                                        @csrf
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="form2Example11">Username</label>
-                                            <input type="email" id="form2Example11" class="form-control"
-                                                placeholder="Username" />
+                                            <input type="text" name="username" id="form2Example11"
+                                                class="form-control" placeholder="Username" />
                                         </div>
 
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="form2Example22">Password</label>
-                                            <input type="password" id="form2Example22" class="form-control" />
+                                            <input type="password" name="password" id="form2Example22"
+                                                class="form-control" placeholder="*****" />
                                         </div>
 
                                         <div class="text-center pt-1 mb-5 pb-1">
                                             <button
                                                 class="btn btn-warning fa-lg gradient-custom-2 mb-3 text-uppercase fw-bold px-5"
-                                                type="button">Log
+                                                type="submit">Log
                                                 in</button>
                                         </div>
                                     </form>

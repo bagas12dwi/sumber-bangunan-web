@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
@@ -19,14 +20,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/informasi-produk', [ProductInformationController::class, 'index']);
-Route::resource('manage-user', UserController::class);
-Route::resource('manage-kategori', CategoryController::class);
-Route::resource('manage-satuan', UnitController::class);
-Route::resource('manage-produk', ProductController::class);
-Route::resource('manage-multiharga', UserController::class);
-
-Route::get('login', function () {
-    return view('login');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/informasi-produk', [ProductInformationController::class, 'index']);
+    Route::resource('manage-user', UserController::class);
+    Route::resource('manage-kategori', CategoryController::class);
+    Route::resource('manage-satuan', UnitController::class);
+    Route::resource('manage-produk', ProductController::class);
+    Route::resource('manage-multiharga', UserController::class);
 });
+
+Route::get('login', [AuthController::class, 'index']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
