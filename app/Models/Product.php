@@ -15,4 +15,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
+
+    public function MultiPrice()
+    {
+        return $this->hasMany('App\Models\MultiPrice');
+    }
 }

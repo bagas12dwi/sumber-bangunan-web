@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MultiPriceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductInformationController;
 use App\Http\Controllers\UnitController;
@@ -27,7 +28,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('manage-kategori', CategoryController::class);
     Route::resource('manage-satuan', UnitController::class);
     Route::resource('manage-produk', ProductController::class);
-    Route::resource('manage-multiharga', UserController::class);
+    Route::resource('manage-multiharga', MultiPriceController::class);
 });
 
 Route::get('login', [AuthController::class, 'index']);

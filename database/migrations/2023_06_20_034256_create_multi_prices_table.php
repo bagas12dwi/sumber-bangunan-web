@@ -17,8 +17,9 @@ return new class extends Migration
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('amount');
             $table->foreignId('unit_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->integer('selling_price');
-            $table->integer('capital_price');
+            $table->integer('selling_price')->nullable();
+            $table->integer('capital_price')->nullable();
+            $table->date('date_modified');
             $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
         });
     }

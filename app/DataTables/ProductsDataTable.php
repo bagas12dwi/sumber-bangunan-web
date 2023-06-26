@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\URL;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -23,9 +24,14 @@ class ProductsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'products.action')
+            ->addColumn('image', function ($query) {
+                return '<img src="' . URL::asset('storage/' . $query->img_path) . '" style="height: 200px; width: 200px; object-fit: cover;">';
+            })
             ->addIndexColumn()
-            ->setRowId('id');
+            ->setRowId('id')
+            ->rawColumns(['image', 'action']);
     }
+
 
     /**
      * Get the query source of dataTable.
@@ -56,7 +62,8 @@ class ProductsDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->searchable(false)->orderable(false)->title('No. ')->width(10),
-            Column::make('img_path')->title('Gambar'),
+            // Column::make('img_path')->title('Gambar'),
+            Column::computed('image')->title('Foto Produk')->width(250),
             Column::make('product_name')->title('Nama Produk'),
             'category_id' => new Column([
                 'title' => 'Nama Kategori',

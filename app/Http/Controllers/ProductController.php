@@ -6,7 +6,9 @@ use App\DataTables\ProductsDataTable;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\MultiPrice;
 use App\Models\Product;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 
@@ -28,9 +30,11 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $units = Unit::all();
         return view('products.add', [
             'title' => 'Tambah Produk',
-            'categories' => $categories
+            'categories' => $categories,
+            'units' => $units
         ]);
     }
 
@@ -46,9 +50,22 @@ class ProductController extends Controller
         ]);
 
         $validatedData['img_path'] = $request->file('img_path')->store('produk');
-        $validateddata['user_id'] = auth()->user()->id;
+        $validatedData['user_id'] = auth()->user()->id;
 
         Product::create($validatedData);
+
+        $product = Product::where('product_name', '=', $validatedData['product_name'])->firstOrFail();
+
+        $multiPrice = new MultiPrice();
+        $multiPrice->product_id = $product->id;
+        $multiPrice->amount = $request->amount;
+        $multiPrice->unit_id = $request->unit_id;
+        $multiPrice->selling_price = $request->selling_price;
+        $multiPrice->capital_price = $request->capital_price;
+        $multiPrice->date_modified = $request->date_modified;
+        $multiPrice->user_id = auth()->user()->id;
+        $multiPrice->save();
+
         return redirect()->intended('manage-produk')->with('success', 'Data Berhasil Ditambahkan !');
     }
 
