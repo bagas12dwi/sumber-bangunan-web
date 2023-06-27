@@ -71,6 +71,8 @@ class CategoryController extends Controller
         $validatedData = $request->validate([
             'category_name' => 'required'
         ]);
+        $validateddata['user_id'] = auth()->user()->id;
+
 
         Category::where('id', $manage_kategori->id)->update($validatedData);
         return redirect()->intended('/manage-kategori')->with('success', 'Data Berhasil Diubah ! ');

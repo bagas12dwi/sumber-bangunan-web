@@ -107,6 +107,8 @@ class ProductController extends Controller
             }
             $validatedData['img_path'] = $request->file('img_path')->store('produk');
         }
+        $validatedData['user_id'] = auth()->user()->id;
+
         Product::where('id', $manage_produk->id)->update($validatedData);
         return redirect()->intended('manage-produk')->with('success', 'Data Berhasil Diubah !');
     }

@@ -72,6 +72,8 @@ class UnitController extends Controller
         $validatedData = $request->validate([
             'unit_name' => 'required'
         ]);
+        $validateddata['user_id'] = auth()->user()->id;
+
 
         Unit::where('id', $manage_satuan->id)->update($validatedData);
         return redirect()->intended('/manage-satuan')->with('success', 'Data Berhasil Diubah ! ');
