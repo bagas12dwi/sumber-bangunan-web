@@ -2,8 +2,11 @@
 
 namespace App\DataTables;
 
+use App\Helpers\Helper;
+use App\Models\Product;
 use App\Models\ProductInformation;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\URL;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -22,16 +25,55 @@ class ProductInformationsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'productinformations.action')
-            ->setRowId('id');
+            ->addColumn('harga_modal', function ($product) {
+                $harga_modal = '';
+                $helper = new Helper();
+
+                foreach ($product->MultiPrice as $multiprice) {
+                    if ($multiprice->capital_price != null || $multiprice->capital_price != '') {
+                        $harga_modal .= '<p>' . $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' = ' . $helper->formatRupiah($multiprice->capital_price) . '</p>';
+                    }
+                }
+
+                return $harga_modal;
+            })
+            ->addColumn('harga_jual', function ($product) {
+                $harga_jual = '';
+                $helper = new Helper();
+
+                foreach ($product->MultiPrice as $multiprice) {
+                    if ($multiprice->selling_price != null || $multiprice->selling_price != '') {
+                        $harga_jual .= '<p>' . $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' = ' . $helper->formatRupiah($multiprice->selling_price) . '</p>';
+                    }
+                }
+
+                return $harga_jual;
+            })
+            ->addColumn('tanggal', function ($product) {
+                $tanggal = '';
+
+                foreach ($product->MultiPrice as $multiprice) {
+                    $tanggal .= '<p class="me-2">' . $multiprice->date_modified . '</p>';
+                }
+
+                return $tanggal;
+            })
+            ->addColumn('image', function ($query) {
+                return '<img src="' . URL::asset('storage/' . $query->img_path) . '" style="height: 200px; width: 200px; object-fit: cover;">';
+            })
+            ->addIndexColumn()
+            ->setRowId('id')
+            ->rawColumns(['harga_modal', 'harga_jual', 'tanggal', 'image']);
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(ProductInformation $model): QueryBuilder
+    public function query(): QueryBuilder
     {
-        return $model->newQuery();
+        $query = Product::with('MultiPrice');
+
+        return $this->applyScopes($query);
     }
 
     /**
@@ -45,15 +87,7 @@ class ProductInformationsDataTable extends DataTable
             ->minifiedAjax()
             //->dom('Bfrtip')
             ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            ]);
+            ->selectStyleSingle();
     }
 
     /**
@@ -62,17 +96,16 @@ class ProductInformationsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('No. '),
-            Column::make('gambar_produk'),
-            Column::make('nama_produk'),
-            Column::make('harga_modal'),
-            Column::make('harga_jual'),
-            Column::make('updated_at'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
+            Column::make('DT_RowIndex')->searchable(false)->orderable(false)->title('No. ')->width(10),
+            Column::computed('image')->title('Foto Produk')->width(250),
+            'product_id' => new Column([
+                'title' => 'Nama Produk',
+                'data' => 'product_name',
+                'name' => 'product_name'
+            ]),
+            ['data' => 'harga_modal', 'title' => 'Harga Modal'],
+            ['data' => 'harga_jual', 'title' => 'Harga Jual'],
+            ['data' => 'tanggal', 'title' => 'Tanggal']
         ];
     }
 
