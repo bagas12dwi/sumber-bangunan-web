@@ -51,8 +51,14 @@ class MultiPriceController extends Controller
             'date_modified' => 'required'
         ]);
 
-        $validatedData['selling_price'] = $request->selling_price;
-        $validatedData['capital_price'] = $request->capital_price;
+        if ($request->selling_price != null) {
+            $validatedData['selling_price'] = substr($request->selling_price, 0, strpos($request->selling_price, ","));
+        }
+
+        if ($request->capital_price != null) {
+            $validatedData['capital_price'] = substr($request->capital_price, 0, strpos($request->capital_price, ","));
+        }
+
         $validatedData['user_id'] = auth()->user()->id;
 
         MultiPrice::create($validatedData);
@@ -70,24 +76,51 @@ class MultiPriceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(MultiPrice $multiPrice)
+    public function edit(MultiPrice $manage_multiharga)
     {
-        //
+        $products = Product::all();
+        $units = Unit::all();
+
+        return view('multiprices.edit', [
+            'title' => 'Edit Multi Harga',
+            'products' => $products,
+            'units' => $units,
+            'multiprice' => $manage_multiharga
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMultiPriceRequest $request, MultiPrice $multiPrice)
+    public function update(Request $request, MultiPrice $manage_multiharga)
     {
-        //
+        $validatedData = $request->validate([
+            'product_id' => 'required',
+            'amount' => 'required',
+            'unit_id' => 'required',
+            'date_modified' => 'required'
+        ]);
+
+        if ($request->selling_price != null) {
+            $validatedData['selling_price'] = substr($request->selling_price, 0, strpos($request->selling_price, ","));
+        }
+
+        if ($request->capital_price != null) {
+            $validatedData['capital_price'] = substr($request->capital_price, 0, strpos($request->capital_price, ","));
+        }
+
+        $validatedData['user_id'] = auth()->user()->id;
+
+        MultiPrice::where('id', $manage_multiharga->id)->update($validatedData);
+        return redirect()->intended('manage-multiharga')->with('success', 'Data Berhasil Diubah!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MultiPrice $multiPrice)
+    public function destroy(MultiPrice $manage_multiharga)
     {
-        //
+        MultiPrice::destroy($manage_multiharga->id);
+        return redirect()->intended('manage-multiharga')->with('success', 'Data Berhasil Dihapus!');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Helpers\Helper;
 use App\Models\MultiPrice;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -23,13 +24,14 @@ class MultiPricesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'multiprices.action')
+            // ->addColumn('action', 'multiprices.action')
             ->addColumn('harga_modal', function ($product) {
                 $harga_modal = '';
+                $helper = new Helper();
 
                 foreach ($product->MultiPrice as $multiprice) {
                     if ($multiprice->capital_price != null || $multiprice->capital_price != '') {
-                        $harga_modal .= '<p>' . $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' = ' . $multiprice->capital_price . '</p>';
+                        $harga_modal .= '<p>' . $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' = ' . $helper->formatRupiah($multiprice->capital_price) . '</p>';
                     }
                 }
 
@@ -37,10 +39,11 @@ class MultiPricesDataTable extends DataTable
             })
             ->addColumn('harga_jual', function ($product) {
                 $harga_jual = '';
+                $helper = new Helper();
 
                 foreach ($product->MultiPrice as $multiprice) {
                     if ($multiprice->selling_price != null || $multiprice->selling_price != '') {
-                        $harga_jual .= '<p>' . $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' = ' . $multiprice->selling_price . '</p>';
+                        $harga_jual .= '<p>' . $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' = ' . $helper->formatRupiah($multiprice->selling_price) . '</p>';
                     }
                 }
 
@@ -50,7 +53,7 @@ class MultiPricesDataTable extends DataTable
                 $tanggal = '';
 
                 foreach ($product->MultiPrice as $multiprice) {
-                    $tanggal .= '<p>' . $multiprice->date_modified . '</p>';
+                    $tanggal .= '<div class="d-flex align-middle">' . '<p class="me-2">' . $multiprice->date_modified . '</p>' . view('multiprices.action', compact('multiprice')) . '</div>';
                 }
 
                 return $tanggal;
@@ -100,11 +103,11 @@ class MultiPricesDataTable extends DataTable
             ['data' => 'harga_modal', 'title' => 'Harga Modal'],
             ['data' => 'harga_jual', 'title' => 'Harga Jual'],
             ['data' => 'tanggal', 'title' => 'Tanggal'],
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
+            // Column::computed('action')
+            //     ->exportable(false)
+            //     ->printable(false)
+            //     ->width(60)
+            //     ->addClass('text-center'),
         ];
     }
 

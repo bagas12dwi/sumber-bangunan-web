@@ -34,6 +34,15 @@
         trix-toolbar [data-trix-button-group="file-tools"] {
             display: none;
         }
+
+        .rupiah-input {
+            text-align: right;
+        }
+
+        .dataTables_filter input {
+            width: 400px;
+            /* Set the desired width for the search input field */
+        }
     </style>
 
     @stack('css')
@@ -87,6 +96,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ URL::asset('/js/soft-ui-dashboard.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
 
     @stack('script')
 </body>
