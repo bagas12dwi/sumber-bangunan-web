@@ -56,24 +56,33 @@ class UnitController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Unit $unit)
+    public function edit(Unit $manage_satuan)
     {
-        //
+        return view('units.edit', [
+            'title' => 'Edit Satuan',
+            'unit' => $manage_satuan
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUnitRequest $request, Unit $unit)
+    public function update(Request $request, Unit $manage_satuan)
     {
-        //
+        $validatedData = $request->validate([
+            'unit_name' => 'required'
+        ]);
+
+        Unit::where('id', $manage_satuan->id)->update($validatedData);
+        return redirect()->intended('/manage-satuan')->with('success', 'Data Berhasil Diubah ! ');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Unit $unit)
+    public function destroy(Unit $manage_satuan)
     {
-        //
+        Unit::destroy($manage_satuan->id);
+        return redirect()->intended('/manage-satuan')->with('success', 'Data Berhasil Dihapus ! ');
     }
 }

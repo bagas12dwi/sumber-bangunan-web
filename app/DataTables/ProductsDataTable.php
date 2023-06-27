@@ -23,7 +23,9 @@ class ProductsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'products.action')
+            ->addColumn('action', function ($product) {
+                return view('products.action', compact('product'));
+            })
             ->addColumn('image', function ($query) {
                 return '<img src="' . URL::asset('storage/' . $query->img_path) . '" style="height: 200px; width: 200px; object-fit: cover;">';
             })

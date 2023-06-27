@@ -10,7 +10,7 @@ use App\Models\MultiPrice;
 use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -80,24 +80,43 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Product $manage_produk)
     {
-        //
+        $categories = Category::all();
+        return view('products.edit', [
+            'title' => 'Edit Produk',
+            'product' => $manage_produk,
+            'categories' => $categories
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, Product $manage_produk)
     {
-        //
+        $validatedData = $request->validate([
+            'product_name' => 'required',
+            'category_id' => 'required',
+            'img_path' => 'image'
+        ]);
+
+        if ($request->file('img_path')) {
+            if ($request->oldImg) {
+                Storage::delete($request->oldImg);
+            }
+            $validatedData['img_path'] = $request->file('img_path')->store('produk');
+        }
+        Product::where('id', $manage_produk->id)->update($validatedData);
+        return redirect()->intended('manage-produk')->with('success', 'Data Berhasil Diubah !');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Product $manage_produk)
     {
-        //
+        Product::destroy($manage_produk->id);
+        return redirect()->intended('manage-produk')->with('success', 'Data Berhasil Dihapus !');
     }
 }

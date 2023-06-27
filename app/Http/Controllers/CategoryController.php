@@ -49,30 +49,39 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Category $manage_kategori)
     {
-        //
+        // dd($manage_kategori);
+        return view('categories.edit', [
+            'title' => 'Edit Kategori',
+            'category' => $manage_kategori
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Request $request, Category $manage_kategori)
     {
-        //
+        $validatedData = $request->validate([
+            'category_name' => 'required'
+        ]);
+
+        Category::where('id', $manage_kategori->id)->update($validatedData);
+        return redirect()->intended('/manage-kategori')->with('success', 'Data Berhasil Diubah ! ');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Category $manage_kategori)
     {
-        //
+        Category::destroy($manage_kategori->id);
+        return redirect()->intended('/manage-kategori')->with('success', 'Data Berhasil Dihapus ! ');
     }
 }

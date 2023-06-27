@@ -22,7 +22,9 @@ class CategoriesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'categories.action')
+            ->addColumn('action', function ($category) {
+                return view('categories.action', compact('category'));
+            })
             ->addIndexColumn()
             ->setRowId('id');
     }

@@ -70,8 +70,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $manage_user)
     {
-        //
+        User::destroy($manage_user->id);
+        return redirect()->intended('/manage-user')->with('success', 'Data Berhasil Dihapus!');
     }
 }
