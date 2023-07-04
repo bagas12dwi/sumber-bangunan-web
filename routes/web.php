@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\MultiPriceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductInformationController;
@@ -30,6 +31,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('manage-produk', ProductController::class);
     Route::resource('manage-multiharga', MultiPriceController::class);
 });
+
+Route::get('/', [HomepageController::class, 'index']);
 
 Route::get('login', [AuthController::class, 'index']);
 Route::post('login', [AuthController::class, 'login']);

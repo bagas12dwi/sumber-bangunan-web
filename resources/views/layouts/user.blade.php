@@ -1,35 +1,82 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Sumber Bangunan</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" href=" {{ URL::asset('style.css') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <title>
+        Sumber Bangunan
+    </title>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+
+    <!-- Nucleo Icons -->
+    <link href="{{ URL::asset('/css/nucleo-icons.css') }}" rel="stylesheet" />
+    <link href="{{ URL::asset('/css/style.css') }}" rel="stylesheet" />
+    <link href="{{ URL::asset('/css/nucleo-svg.css') }}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="{{ URL::asset('/css/nucleo-svg.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/trix.css') }}">
+    <script type="text/javascript" src="{{ URL::asset('js/trix.js') }}"></script>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="{{ URL::asset('/css/soft-ui-dashboard.css') }}" rel="stylesheet" />
+
+    <style>
+        trix-toolbar [data-trix-button-group="file-tools"] {
+            display: none;
+        }
+
+        .rupiah-input {
+            text-align: right;
+        }
+
+        .dataTables_filter input {
+            width: 400px;
+            /* Set the desired width for the search input field */
+        }
+    </style>
+
+    @stack('css')
 
 </head>
 
-<body>
-    @include('components.navbar')
-    <main>
-        @yield('konten')
-    </main>
-    <footer>
-        <!-- place footer here -->
-    </footer>
-    <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-    </script>
+<body class="g-sidenav-show  bg-gray-100">
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        @include('components.navbar-user')
+        <!-- End Navbar -->
+        <div style="margin: 0px!important">
+            @yield('konten')
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-    </script>
+    </main>
+    <!--   Core JS Files   -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+    <script src="{{ URL::asset('/vendor/datatables/buttons.server-side.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ URL::asset('/js/core/popper.min.js') }}"></script>
+    <script src="{{ URL::asset('/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('/js/plugins/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ URL::asset('/js/plugins/smooth-scrollbar.min.js') }}"></script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{ URL::asset('/js/soft-ui-dashboard.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+
+    @stack('script')
 </body>
 
 </html>
