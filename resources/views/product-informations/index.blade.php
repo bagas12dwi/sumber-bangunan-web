@@ -3,7 +3,7 @@
 @section('konten')
     <div class="row">
         <div class="col-md-6 d-flex justify-content-start">
-            <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <a href="{{ url('cetak-produk') }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-download me-1" viewBox="0 0 16 16">
                     <path

@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('manage-satuan', UnitController::class);
     Route::resource('manage-produk', ProductController::class);
     Route::resource('manage-multiharga', MultiPriceController::class);
+    Route::get('/cetak-produk', [ProductInformationController::class, 'print']);
 });
 
 Route::get('/', [HomepageController::class, 'index']);
