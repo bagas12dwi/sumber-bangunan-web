@@ -39,8 +39,8 @@
                         <th scope="col" style="width: 2%;">No.</th>
                         <th scope="col">Foto Produk</th>
                         <th scope="col">Nama Produk</th>
-                        <th scope="col">Harga Jual</th>
                         <th scope="col">Harga Modal</th>
+                        <th scope="col">Harga Jual</th>
                         <th scope="col">Tanggal</th>
                     </tr>
                 </thead>
@@ -53,14 +53,28 @@
                                     style="height: 100px">
                             </td>
                             <td scope="row"> {{ $item->product_name }} </td>
-                            @foreach ($item->Multiprice as $multiprice)
-                                <td> {{ $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' ' . $helper->formatRupiah($multiprice->selling_price) }}
-                                </td>
-                                <td> {{ $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' ' . $helper->formatRupiah($multiprice->capital_price) }}
-                                </td>
-                                <td> {{ $multiprice->date_modified }}
-                                </td>
-                            @endforeach
+                            <td>
+                                @foreach ($item->Multiprice as $multiprice)
+                                    @if ($multiprice->capital_price != null || $multiprice->capital_price != '')
+                                        {{ $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' ' . $helper->formatRupiah($multiprice->capital_price) }}
+                                    @endif
+                                    <br>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach ($item->Multiprice as $multiprice)
+                                    @if ($multiprice->selling_price != null || $multiprice->selling_price != '')
+                                        {{ $multiprice->amount . ' ' . $multiprice->unit->unit_name . ' ' . $helper->formatRupiah($multiprice->selling_price) }}
+                                    @endif
+                                    <br>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach ($item->Multiprice as $multiprice)
+                                    {{ $multiprice->date_modified }}
+                                    <br>
+                                @endforeach
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

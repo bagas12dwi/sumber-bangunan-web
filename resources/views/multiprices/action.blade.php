@@ -7,7 +7,8 @@
         </svg>
     </a>
     <a class="text-danger"
-        onclick="event.preventDefault(); if (confirm('Apakah anda yakin?')) { document.getElementById('delete-form-{{ $multiprice->id }}').submit(); }">
+        onclick="event.preventDefault(); if (confirm('Apakah anda yakin?')) { document.getElementById('delete-form-{{ $multiprice->id }}').submit(); }"
+        style="cursor: pointer;">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="bi bi-x-square-fill" viewBox="0 0 16 16">
             <path
