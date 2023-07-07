@@ -8,7 +8,7 @@
                         document.write(new Date().getFullYear())
                     </script>,
                     made with <i class="fa fa-heart"></i> by
-                    <a href="#" class="font-weight-bold" target="_blank">PT. Radnet Digital Solusindo</a>
+                    <a href="#" class="font-weight-bold" target="_blank">PT. Radnet Digital Indonesia</a>
                     for a better web.
                 </div>
             </div>
